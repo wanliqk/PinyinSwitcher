@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37614.0 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinyinSwitcher", "PinyinSwitcher.csproj", "{298C3362-6A67-4CED-B77C-D598D7B831B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{298C3362-6A67-4CED-B77C-D598D7B831B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298C3362-6A67-4CED-B77C-D598D7B831B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298C3362-6A67-4CED-B77C-D598D7B831B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{298C3362-6A67-4CED-B77C-D598D7B831B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {891D442F-9AB6-4006-BAFF-AB1F21EA82A3}
+	EndGlobalSection
+EndGlobal
