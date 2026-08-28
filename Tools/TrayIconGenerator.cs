@@ -76,19 +76,22 @@ namespace PinyinSwitcher.Tools
                 graphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
                 format.FormatFlags = StringFormatFlags.NoClip | StringFormatFlags.NoWrap;
 
-                float padding = Math.Max(1f, size * 0.06f);
-                float availableSize = size - (padding * 2f);
-                using (Font probeFont = new Font(fontFamily, 100f, FontStyle.Bold, GraphicsUnit.Pixel))
+                using (GraphicsPath path = new GraphicsPath())
                 {
-                    SizeF probeSize = graphics.MeasureString(text, probeFont, PointF.Empty, format);
-                    float fontSize = 100f * Math.Min(availableSize / probeSize.Width, availableSize / probeSize.Height);
-                    using (Font font = new Font(fontFamily, fontSize, FontStyle.Bold, GraphicsUnit.Pixel))
+                    path.AddString(text, fontFamily, (int)FontStyle.Bold, 100f, PointF.Empty, format);
+                    RectangleF bounds = path.GetBounds();
+                    float padding = Math.Max(0.5f, size * 0.02f);
+                    float scale = Math.Min(
+                        (size - (padding * 2f)) / bounds.Width,
+                        (size - (padding * 2f)) / bounds.Height);
+                    float x = (size - (bounds.Width * scale)) / 2f - (bounds.X * scale);
+                    float y = (size - (bounds.Height * scale)) / 2f - (bounds.Y * scale);
+                    using (Matrix transform = new Matrix(scale, 0f, 0f, scale, x, y))
                     {
-                        SizeF textSize = graphics.MeasureString(text, font, PointF.Empty, format);
-                        float x = (size - textSize.Width) / 2f;
-                        float y = (size - textSize.Height) / 2f;
-                        graphics.DrawString(text, font, brush, x, y, format);
+                        path.Transform(transform);
                     }
+
+                    graphics.FillPath(brush, path);
                 }
 
                 using (MemoryStream stream = new MemoryStream())
