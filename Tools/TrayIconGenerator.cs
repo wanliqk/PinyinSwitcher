@@ -78,7 +78,7 @@ namespace PinyinSwitcher.Tools
 
                 using (GraphicsPath path = new GraphicsPath())
                 {
-                    path.AddString(text, fontFamily, (int)FontStyle.Bold, 100f, PointF.Empty, format);
+                    path.AddString(text, fontFamily, (int)FontStyle.Regular, 100f, PointF.Empty, format);
                     RectangleF bounds = path.GetBounds();
                     float padding = Math.Max(0.5f, size * 0.02f);
                     float scale = Math.Min(
