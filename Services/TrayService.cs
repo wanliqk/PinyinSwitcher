@@ -12,6 +12,8 @@ namespace PinyinSwitcher.Services
         private readonly ToolStripMenuItem _fullPinyinItem;
         private readonly ToolStripMenuItem _doublePinyinItem;
         private readonly ToolStripMenuItem _startupItem;
+        private readonly Icon _fullIcon;
+        private readonly Icon _doubleIcon;
 
         public TrayService(
             Action<PinyinMode> setMode,
@@ -20,6 +22,8 @@ namespace PinyinSwitcher.Services
             Action<bool> setStartup,
             Action exit)
         {
+            _fullIcon = LoadIcon("PinyinSwitcher.Resources.full.ico");
+            _doubleIcon = LoadIcon("PinyinSwitcher.Resources.double.ico");
             _fullPinyinItem = new ToolStripMenuItem("全拼", null, (sender, args) => setMode(PinyinMode.FullPinyin));
             _doublePinyinItem = new ToolStripMenuItem("双拼", null, (sender, args) => setMode(PinyinMode.DoublePinyin));
 
@@ -52,7 +56,7 @@ namespace PinyinSwitcher.Services
                 ContextMenuStrip = _menu,
                 Icon = SystemIcons.Application,
                 Text = "Pinyin Switcher",
-                Visible = true
+                Visible = false
             };
             _notifyIcon.DoubleClick += (sender, args) => showSettings();
         }
@@ -65,9 +69,13 @@ namespace PinyinSwitcher.Services
             _fullPinyinItem.Checked = mode == PinyinMode.FullPinyin;
             _doublePinyinItem.Checked = mode == PinyinMode.DoublePinyin;
             _startupItem.Checked = startupEnabled;
+            _notifyIcon.Icon = available
+                ? mode == PinyinMode.FullPinyin ? _fullIcon : _doubleIcon
+                : SystemIcons.Application;
             _notifyIcon.Text = available
-                ? "Pinyin Switcher - 当前：" + GetDisplayName(mode.Value)
+                ? "Pinyin Switcher - " + GetDisplayName(mode.Value)
                 : "Pinyin Switcher - 未检测到微软拼音";
+            _notifyIcon.Visible = true;
         }
 
         public void ShowInfo(string message)
@@ -85,6 +93,8 @@ namespace PinyinSwitcher.Services
             _notifyIcon.Visible = false;
             _notifyIcon.Dispose();
             _menu.Dispose();
+            _fullIcon.Dispose();
+            _doubleIcon.Dispose();
         }
 
         private void ShowBalloon(string message, ToolTipIcon icon)
@@ -98,6 +108,22 @@ namespace PinyinSwitcher.Services
         private static string GetDisplayName(PinyinMode mode)
         {
             return mode == PinyinMode.FullPinyin ? "全拼" : "双拼";
+        }
+
+        private static Icon LoadIcon(string resourceName)
+        {
+            using (System.IO.Stream stream = typeof(TrayService).Assembly.GetManifestResourceStream(resourceName))
+            {
+                if (stream == null)
+                {
+                    throw new InvalidOperationException("未找到托盘图标资源：" + resourceName);
+                }
+
+                using (Icon icon = new Icon(stream, SystemInformation.SmallIconSize))
+                {
+                    return (Icon)icon.Clone();
+                }
+            }
         }
     }
 }

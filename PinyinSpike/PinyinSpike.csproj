@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +48,9 @@
     </Compile>
     <Compile Include="..\Services\PinyinService.cs">
       <Link>Services\PinyinService.cs</Link>
+    </Compile>
+    <Compile Include="..\Tools\TrayIconGenerator.cs">
+      <Link>Tools\TrayIconGenerator.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

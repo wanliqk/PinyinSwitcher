@@ -106,5 +106,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\full.ico">
+      <LogicalName>PinyinSwitcher.Resources.full.ico</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\double.ico">
+      <LogicalName>PinyinSwitcher.Resources.double.ico</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

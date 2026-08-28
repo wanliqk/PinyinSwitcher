@@ -3,6 +3,7 @@ using System.Text;
 using System.Web.Script.Serialization;
 using PinyinSwitcher.Models;
 using PinyinSwitcher.Services;
+using PinyinSwitcher.Tools;
 
 namespace PinyinSpike
 {
@@ -18,6 +19,11 @@ namespace PinyinSpike
             if (args.Length == 1 && string.Equals(args[0], "--self-test", StringComparison.OrdinalIgnoreCase))
             {
                 return RunSelfTest();
+            }
+
+            if (args.Length == 1 && string.Equals(args[0], "--generate-tray-icons", StringComparison.OrdinalIgnoreCase))
+            {
+                return GenerateTrayIcons();
             }
 
             while (true)
@@ -108,6 +114,21 @@ namespace PinyinSpike
             {
                 Console.WriteLine("Self-test passed.");
                 return 0;
+            }
+        }
+
+        private static int GenerateTrayIcons()
+        {
+            try
+            {
+                TrayIconGenerator.GenerateIcons();
+                Console.WriteLine("已生成 Resources/full.ico 和 Resources/double.ico。");
+                return 0;
+            }
+            catch (Exception exception)
+            {
+                Console.Error.WriteLine("托盘图标生成失败：{0}", exception.Message);
+                return 1;
             }
         }
 

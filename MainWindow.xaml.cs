@@ -62,14 +62,13 @@ namespace PinyinSwitcher
             IntPtr handle = new WindowInteropHelper(this).EnsureHandle();
             _messageSource = HwndSource.FromHwnd(handle);
             _messageSource.AddHook(WindowMessageHook);
+            RefreshState();
 
             if (!_hotkeyService.Register(handle))
             {
                 Logger.Write("Global hotkey registration failed");
                 _trayService.ShowError("Ctrl + Alt + P 注册失败，快捷键可能已被占用。");
             }
-
-            RefreshState();
         }
 
         private IntPtr WindowMessageHook(
@@ -162,14 +161,15 @@ namespace PinyinSwitcher
             try
             {
                 bool refreshSucceeded = _pinyinService.SetMode(mode);
-                RefreshState();
-                Logger.Write("Mode changed to " + mode);
-
                 if (!refreshSucceeded)
                 {
                     _trayService.ShowError("注册表已更新，但 IME 刷新广播失败或超时。");
+                    return;
                 }
-                else if (_config.ShowNotification)
+
+                RefreshState();
+                Logger.Write("Mode changed to " + mode);
+                if (_config.ShowNotification)
                 {
                     _trayService.ShowInfo("已切换至：" + GetDisplayName(mode));
                 }
@@ -197,21 +197,20 @@ namespace PinyinSwitcher
         {
             try
             {
+                PinyinMode? selectedMode = FullPinyinRadioButton.IsChecked == true
+                    ? PinyinMode.FullPinyin
+                    : DoublePinyinRadioButton.IsChecked == true ? PinyinMode.DoublePinyin : (PinyinMode?)null;
                 _config.ShowNotification = ShowNotificationCheckBox.IsChecked == true;
                 _config.StartMinimized = StartMinimizedCheckBox.IsChecked == true;
                 _configService.Save(_config);
                 _startupService.SetEnabled(StartWithWindowsCheckBox.IsChecked == true);
-
-                if (FullPinyinRadioButton.IsChecked == true)
-                {
-                    SetMode(PinyinMode.FullPinyin);
-                }
-                else if (DoublePinyinRadioButton.IsChecked == true)
-                {
-                    SetMode(PinyinMode.DoublePinyin);
-                }
-
                 RefreshState();
+
+                if (selectedMode.HasValue)
+                {
+                    SetMode(selectedMode.Value);
+                }
+
                 Hide();
             }
             catch (Exception exception)
