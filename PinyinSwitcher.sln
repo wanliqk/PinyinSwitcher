@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.37614.0 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinyinSwitcher", "PinyinSwitcher.csproj", "{298C3362-6A67-4CED-B77C-D598D7B831B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PinyinSpike", "PinyinSpike\PinyinSpike.csproj", "{04C99B93-2B20-4E74-A9D7-C4E32B8D4B59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{298C3362-6A67-4CED-B77C-D598D7B831B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{298C3362-6A67-4CED-B77C-D598D7B831B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{298C3362-6A67-4CED-B77C-D598D7B831B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04C99B93-2B20-4E74-A9D7-C4E32B8D4B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04C99B93-2B20-4E74-A9D7-C4E32B8D4B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04C99B93-2B20-4E74-A9D7-C4E32B8D4B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04C99B93-2B20-4E74-A9D7-C4E32B8D4B59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
